@@ -36,11 +36,38 @@ const treeFactory = (arr) => {
     }
   }
 
-  return { root, prettyPrint };
+  function insert(value) {
+    if (this.root === null) {
+      this.root = nodeFactory(value);
+    } else {
+      let current = this.root;
+
+      while (current) {
+        if (value < current.data) {
+          if (current.left === null) {
+            current.left = nodeFactory(value);
+            return;
+          } 
+          current = current.left;
+        } else if (value > current.data) {
+          if (current.left === null) {
+            current.left = nodeFactory(value);
+            return;
+          } 
+          current = current.right;
+        } else {
+          return;
+        }
+      }
+    }
+  };
+
+  return { root, prettyPrint, insert };
 };
 
-let arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+let arr = [1, 2, 3, 5, 6];
 
 let tree = treeFactory(arr);
+tree.insert(4);
 
 tree.prettyPrint(tree.root);
