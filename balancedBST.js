@@ -144,13 +144,58 @@ const treeFactory = (arr) => {
     }
   }
 
+  function inOrder() {
+    return inOrderRec(this.root, []);
+  }
+
+  function inOrderRec(node, output) {
+    if (node !== null) {
+      inOrderRec(node.left, output);
+      output.push(node.data);
+      inOrderRec(node.right, output);
+
+      return output;
+    }
+  }
+
+  function preOrder() {
+    return preOrderRec(this.root, []);
+  }
+
+  function preOrderRec(node, output) {
+    if (node !== null) {
+      output.push(node.data);
+      preOrderRec(node.left, output);
+      preOrderRec(node.right, output);
+
+      return output;
+    }
+  }
+
+  function postOrder() {
+    return postOrderRec(this.root, []);
+  }
+
+  function postOrderRec(node, output) {
+    if (node !== null) {
+      postOrderRec(node.left, output);
+      postOrderRec(node.right, output);
+      output.push(node.data);
+
+      return output;
+    }
+  }
+
   return { 
     root, 
     prettyPrint, 
     insert, 
     deleteNode, 
     find,
-    levelOrder
+    levelOrder,
+    inOrder,
+    preOrder,
+    postOrder
   };
 };
 
@@ -160,4 +205,6 @@ let tree = treeFactory(arr);
 
 tree.prettyPrint(tree.root);
 
-console.log(tree.levelOrder());
+console.log(tree.inOrder());
+console.log(tree.preOrder());
+console.log(tree.postOrder());
