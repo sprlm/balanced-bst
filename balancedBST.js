@@ -98,16 +98,35 @@ const treeFactory = (arr) => {
 		}
 	}
 
+  function find(value) {
+    if (this.root === null) {
+      return null;
+    } else {
+      let current = this.root;
+
+      while (current) {
+        if (value < current.data) {
+          current = current.left;
+        } else if (value > current.data) {
+          current = current.right;
+        } else {
+          return current;
+        }
+      }
+
+      return null;
+    }
+  };
+
   function findMinNode(node) {
 		return (node.left === null) ? node : findMinNode(node.left);
 	}
 
-  return { root, prettyPrint, insert, deleteNode };
+  return { root, prettyPrint, insert, deleteNode, find };
 };
 
-let arr = [1, 2, 3, 4, 5, 6];
+let arr = [1, 2, 3, 4, 5, 6, 7];
 
 let tree = treeFactory(arr);
-tree.deleteNode(4);
 
-tree.prettyPrint(tree.root);
+tree.prettyPrint(tree.find(6));
