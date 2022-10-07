@@ -67,17 +67,15 @@ const treeFactory = (arr) => {
   }
 
 	function deleteNodeRec(node, key) {
-		if (node === null)
+		if (node === null) {
 			return null;
-		else if (key < node.data) {
+    } else if (key < node.data) {
 			node.left = deleteNodeRec(node.left, key);
 			return node;
-		}
-		else if ( key > node.data ) {
+		} else if ( key > node.data ) {
 			node.right = deleteNodeRec(node.right, key);
 			return node;
-		}
-		else {
+		} else {
 			if (node.left === null && node.right === null) {
 				node = null;
 				return node;
@@ -122,11 +120,44 @@ const treeFactory = (arr) => {
 		return (node.left === null) ? node : findMinNode(node.left);
 	}
 
-  return { root, prettyPrint, insert, deleteNode, find };
+  function levelOrder() {
+    if (this.root === null) {
+      return;
+    } else {
+      let queue = [this.root];
+      let output = [];
+
+      while (queue.length !== 0) {
+        if (queue[0].left) {
+          queue.push(queue[0].left);
+        }
+
+        if (queue[0].right) {
+          queue.push(queue[0].right);
+        }
+
+        output.push(queue[0].data);
+        queue.shift();
+      }
+
+      return output;
+    }
+  }
+
+  return { 
+    root, 
+    prettyPrint, 
+    insert, 
+    deleteNode, 
+    find,
+    levelOrder
+  };
 };
 
 let arr = [1, 2, 3, 4, 5, 6, 7];
 
 let tree = treeFactory(arr);
 
-tree.prettyPrint(tree.find(6));
+tree.prettyPrint(tree.root);
+
+console.log(tree.levelOrder());
