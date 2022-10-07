@@ -62,12 +62,52 @@ const treeFactory = (arr) => {
     }
   };
 
-  return { root, prettyPrint, insert };
+  function deleteNode(data) { 
+    this.root = deleteNodeRec(this.root, data);
+  }
+
+	function deleteNodeRec(node, key) {
+		if (node === null)
+			return null;
+		else if (key < node.data) {
+			node.left = deleteNodeRec(node.left, key);
+			return node;
+		}
+		else if ( key > node.data ) {
+			node.right = deleteNodeRec(node.right, key);
+			return node;
+		}
+		else {
+			if (node.left === null && node.right === null) {
+				node = null;
+				return node;
+			}
+      
+			if (node.left === null) {
+				node = node.right;
+				return node;
+			} else if (node.right === null) {
+				node = node.right;
+				return node;
+			}
+      
+			let aux = findMinNode(node.right);
+			node.data = aux.data;
+			node.right = deleteNodeRec(node.right, aux.data);
+			return node;
+		}
+	}
+
+  function findMinNode(node) {
+		return (node.left === null) ? node : findMinNode(node.left);
+	}
+
+  return { root, prettyPrint, insert, deleteNode };
 };
 
-let arr = [1, 2, 3, 5, 6];
+let arr = [1, 2, 3, 4, 5, 6];
 
 let tree = treeFactory(arr);
-tree.insert(4);
+tree.deleteNode(4);
 
 tree.prettyPrint(tree.root);
