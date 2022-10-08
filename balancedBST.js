@@ -187,14 +187,37 @@ const treeFactory = (arr) => {
   }
 
   function height(node) {
+    if (this.root === null || node === null) {
+      return null;
+    } else {
+      let current = this.root;
+      let value = node.data;
+      let depth = 0;
+
+      while (current) {
+        if (value < current.data) {
+          current = current.left;
+          depth++;
+        } else if (value > current.data) {
+          current = current.right;
+          depth++;
+        } else {
+          return depth;
+        }
+      }
+
+      return null;
+    }
+  }
+
+  function depth(node) {
     if (node === null) {
       return 0;
+    } else {
+      let leftDepth = depth(node.left);
+      let rightDepth = depth(node.right);
+      return Math.max(leftDepth, rightDepth) + 1;
     }
-
-    let leftHeight = height(node.left);
-    let rightHeight = height(node.right);
-
-    return Math.max(leftHeight, rightHeight) + 1;
   }
 
   return { 
@@ -207,14 +230,13 @@ const treeFactory = (arr) => {
     inOrder,
     preOrder,
     postOrder,
-    height
+    height,
+    depth
   };
 };
 
-let arr = [1,2,3,4,5,6,7,8];
+let arr = [1, 2, 3, 4, 5, 6, 7];
 
 let tree = treeFactory(arr);
 
 tree.prettyPrint(tree.root);
-
-console.log(tree.height(tree.root));
