@@ -50,8 +50,8 @@ const treeFactory = (arr) => {
           } 
           current = current.left;
         } else if (value > current.data) {
-          if (current.left === null) {
-            current.left = nodeFactory(value);
+          if (current.right === null) {
+            current.right = nodeFactory(value);
             return;
           } 
           current = current.right;
@@ -220,6 +220,32 @@ const treeFactory = (arr) => {
     }
   }
 
+  function isBalanced() {
+    return isBalancedRec(this.root) > -1;
+  }
+
+  function isBalancedRec(node) {
+    if (node === null) {
+      return 0;
+    } else {
+      let left = isBalancedRec(node.left);
+      if (left === -1) { 
+        return -1;
+      }
+
+      let right = isBalancedRec(node.right);
+      if (right === -1) {
+        return -1;
+      }
+
+      if (Math.abs(left - right) > 1) {
+        return -1;
+      } else {
+        return Math.max(left, right) + 1;
+      }
+    }
+  }
+
   return { 
     root, 
     prettyPrint, 
@@ -231,12 +257,19 @@ const treeFactory = (arr) => {
     preOrder,
     postOrder,
     height,
-    depth
+    depth,
+    isBalanced
   };
 };
 
-let arr = [1, 2, 3, 4, 5, 6, 7];
+let arr = [1, 2, 3, 4, 5, 6, 7, 8];
 
 let tree = treeFactory(arr);
 
 tree.prettyPrint(tree.root);
+console.log(tree.isBalanced())
+
+tree.insert(9);
+tree.prettyPrint(tree.root);
+
+console.log(tree.isBalanced())
