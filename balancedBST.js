@@ -246,6 +246,10 @@ const treeFactory = (arr) => {
     }
   }
 
+  function rebalance() {
+    this.root = buildTree(this.inOrder());
+  }
+
   return { 
     root, 
     prettyPrint, 
@@ -258,7 +262,8 @@ const treeFactory = (arr) => {
     postOrder,
     height,
     depth,
-    isBalanced
+    isBalanced,
+    rebalance
   };
 };
 
@@ -266,10 +271,8 @@ let arr = [1, 2, 3, 4, 5, 6, 7, 8];
 
 let tree = treeFactory(arr);
 
-tree.prettyPrint(tree.root);
-console.log(tree.isBalanced())
-
 tree.insert(9);
 tree.prettyPrint(tree.root);
 
-console.log(tree.isBalanced())
+tree.rebalance();
+tree.prettyPrint(tree.root);
