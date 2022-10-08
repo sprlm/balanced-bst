@@ -267,12 +267,30 @@ const treeFactory = (arr) => {
   };
 };
 
-let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+let arr = Array(10).fill().map(() => Math.round(Math.random() * 101));
+console.log(`Random Array: ${arr}`);
 
 let tree = treeFactory(arr);
-
-tree.insert(9);
 tree.prettyPrint(tree.root);
+
+console.log(`Balanced: ${tree.isBalanced()}`);
+
+console.log(`Preorder: ${tree.preOrder()}`);
+console.log(`Inorder: ${tree.inOrder()}`);
+console.log(`Postorder: ${tree.postOrder()}`);
+
+for (let i = 0; i < 5; i++) {
+  tree.insert(Math.round((Math.random() * 50) + 101));
+}
+
+tree.prettyPrint(tree.root);
+
+console.log(`Balanced: ${tree.isBalanced()}`);
 
 tree.rebalance();
 tree.prettyPrint(tree.root);
+console.log(`Balanced: ${tree.isBalanced()}`);
+
+console.log(`Preorder: ${tree.preOrder()}`);
+console.log(`Inorder: ${tree.inOrder()}`);
+console.log(`Postorder: ${tree.postOrder()}`);
