@@ -186,6 +186,17 @@ const treeFactory = (arr) => {
     }
   }
 
+  function height(node) {
+    if (node === null) {
+      return 0;
+    }
+
+    let leftHeight = height(node.left);
+    let rightHeight = height(node.right);
+
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
+
   return { 
     root, 
     prettyPrint, 
@@ -195,16 +206,15 @@ const treeFactory = (arr) => {
     levelOrder,
     inOrder,
     preOrder,
-    postOrder
+    postOrder,
+    height
   };
 };
 
-let arr = [1, 2, 3, 4, 5, 6, 7];
+let arr = [1,2,3,4,5,6,7,8];
 
 let tree = treeFactory(arr);
 
 tree.prettyPrint(tree.root);
 
-console.log(tree.inOrder());
-console.log(tree.preOrder());
-console.log(tree.postOrder());
+console.log(tree.height(tree.root));
